@@ -7,7 +7,7 @@
 #if !defined (ARDUINO_ARCH_ESP8266)
 #include <WiFi.h>
 #include <WebServer.h>
-#include <mDNS.h>
+#include <mdns.h>
 #else
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
