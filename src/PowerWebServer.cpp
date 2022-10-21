@@ -5,6 +5,7 @@
 #include "PowerWebServer.h"
 
 
+
 void loop() 
 {
   mqtt.loop();
@@ -54,15 +55,28 @@ void setup()
   Serial.println();
   Serial.println( "------------------------------------------");
   
-  // Connect to the network
-  WiFi.begin( _SSID, _PASSWORD);            
-  Serial.print("Connecting to "); Serial.print(_SSID); Serial.println(" ...");
-
-  int i = 0;
-  while (WiFi.status() != WL_CONNECTED)  // Wait for the Wi-Fi to connect
+  while( WiFi.status() != WL_CONNECTED )
   {
-    delay(1000);
-    Serial.print(++i); Serial.print(' ');
+    // Connect to the network
+    WiFi.begin( _SSID, _PASSWORD);       
+    Serial.println();
+
+    Serial.print("Connecting to "); Serial.print(_SSID); Serial.println(" ...");
+
+    int i = 0;
+    while (WiFi.status() != WL_CONNECTED)  // Wait for the Wi-Fi to connect
+    {
+      delay(1000);
+      Serial.print(++i); Serial.print(' ');
+      if ( i > 10 )
+      {         
+         WiFi.disconnect();
+         Serial.println();
+         Serial.println("Timeout, trying again in 5 seconds...");
+         delay( 5000 );      
+        break;
+      }
+    }
   }
 
   Serial.println("Connected!");
